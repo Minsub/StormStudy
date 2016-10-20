@@ -43,9 +43,7 @@ public class SentenceSpout extends BaseRichSpout {
         if (index >= sentences.length) {
             index = 0;
         }
-
         Utils.waitForMillis(1);
-
     }
 }
 
