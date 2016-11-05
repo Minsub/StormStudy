@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="KAFKA" class="com.minsub.storm.logapp.kafka.KafkaAppender">
-        <topic>mytopic</topic>
+        <topic>test</topic>
         <zookeeperHost>localhost:2181</zookeeperHost>
+        <formatter class="com.minsub.storm.logapp.kafka.formatter.MessageFormatter"/>
+        <!--
         <formatter class="com.minsub.storm.logapp.kafka.formatter.JsonFormatter">
             <expectJson>false</expectJson>
         </formatter>
+        -->
     </appender>
 
 
@@ -17,11 +20,12 @@
     </appender>
 
 
-<!--
+    <!--
     <root level="DEBUG">
         <appender-ref ref="KAFKA" />
     </root>
--->
+    -->
+
     <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
