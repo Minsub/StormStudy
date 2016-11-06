@@ -12,8 +12,6 @@ import org.apache.storm.spout.SchemeAsMultiScheme;
 import org.apache.storm.trident.Stream;
 import org.apache.storm.trident.TridentTopology;
 
-import java.util.Arrays;
-
 /**
  * Created by jiminsub on 2016. 10. 21..
  */
@@ -22,7 +20,7 @@ public class MainTopology {
     public static StormTopology buildTopology() {
         TridentTopology topology = new TridentTopology();
         BrokerHosts zk = new ZkHosts("localhost");
-        TridentKafkaConfig spoutConf = new TridentKafkaConfig(zk, "test");
+        TridentKafkaConfig spoutConf = new TridentKafkaConfig(zk, "test1");
         spoutConf.scheme = new SchemeAsMultiScheme(new StringScheme());
         OpaqueTridentKafkaSpout spout = new OpaqueTridentKafkaSpout(spoutConf);
 
@@ -30,18 +28,17 @@ public class MainTopology {
         //spoutStream.each(new Fields(), new PrintLog(), new Fields());
         spoutStream.peek(t -> System.out.println("LOG: " + t.getString(0)));
 
-
         return topology.build();
     }
 
     public static void main(String[] args) throws Exception {
         Config conf = new Config();
-        conf.put(Config.STORM_ZOOKEEPER_PORT, 2181);
-        conf.put(Config.STORM_ZOOKEEPER_SERVERS, Arrays.asList("localhost"));
+//        conf.put(Config.STORM_ZOOKEEPER_PORT, 2181);
+//        conf.put(Config.STORM_ZOOKEEPER_SERVERS, Arrays.asList("localhost"));
 
         LocalCluster cluster = new LocalCluster();
         cluster.submitTopology("logapp", conf, buildTopology());
-        Thread.sleep(1000 * 20);
+        Thread.sleep(1000 * 60);
         cluster.shutdown();
     }
 }
