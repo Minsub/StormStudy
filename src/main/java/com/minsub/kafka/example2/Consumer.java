@@ -48,9 +48,11 @@ public class Consumer extends ShutdownableThread {
     public void doWork() {
         consumer.subscribe(Collections.singletonList(this.topic));
         ConsumerRecords<Integer, String> records = consumer.poll(1000);
+        System.out.println("pull data from kafka. topic: " + this.topic);
         for (ConsumerRecord<Integer, String> record : records) {
             System.out.println("Received message: (" + record.key() + ", " + record.value() + ") at offset " + record.offset());
         }
+
     }
 
     @Override
